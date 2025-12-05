@@ -1,38 +1,6 @@
-import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .send(
-        import.meta.env.VITE_SERVICE_ID,
-        import.meta.env.VITE_TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        import.meta.env.VITE_PUBLIC_KEY
-      )
-      .then(() => {
-        alert("Message Sent Successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      })
-      .catch((err) => {
-        console.error("EmailJS Error:", err);
-        alert("Unable to send. Check console for details.");
-      });
-  };
-
   return (
     <section
       id="contact"
@@ -44,18 +12,19 @@ export const Contact = () => {
             Get In Touch
           </h2>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* ✅ Getform.io direct submission */}
+          <form
+            className="space-y-6"
+            action="https://getform.io/f/axovjnnb"
+            method="POST"
+          >
             <div className="relative">
               <input
                 type="text"
                 name="name"
                 required
-                value={formData.name}
                 className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white"
                 placeholder="Name..."
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
               />
             </div>
 
@@ -64,12 +33,8 @@ export const Contact = () => {
                 type="email"
                 name="email"
                 required
-                value={formData.email}
                 className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white"
                 placeholder="example@gmail.com"
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
               />
             </div>
 
@@ -78,12 +43,8 @@ export const Contact = () => {
                 name="message"
                 required
                 rows={5}
-                value={formData.message}
                 className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white"
                 placeholder="Your Message..."
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
               />
             </div>
 
